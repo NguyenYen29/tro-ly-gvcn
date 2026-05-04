@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ Lý Giáo Viên Chủ Nhiệm 4.0</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #27ae60;
+            --bg-color: #f4f7f6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .input-box {
+            flex: 1;
+            min-width: 200px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .comment-cell {
+            font-style: italic;
+            color: #555;
+            max-width: 400px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Phần Mềm Hỗ Trợ Giáo Viên Chủ Nhiệm</h1>
+    
+    <div class="form-group">
+        <div class="input-box">
+            <label for="studentName">Họ và Tên Học Sinh:</label>
+            <input type="text" id="studentName" placeholder="VD: Nguyễn Văn A">
+        </div>
+        <div class="input-box">
+            <label for="className">Lớp:</label>
+            <select id="className">
+                <option value="10A1">10A1</option>
+                <option value="10A8">10A8</option>
+                <option value="10A9">10A9</option>
+                <option value="12A3">12A3</option>
+            </select>
+        </div>
+        <div class="input-box">
+            <label for="score">Điểm TB Học Kỳ/Cả Năm:</label>
+            <input type="number" id="score" step="0.1" min="0" max="10" placeholder="VD: 8.5">
+        </div>
+        <div class="input-box">
+            <label for="conduct">Hạnh Kiểm:</label>
+            <select id="conduct">
+                <option value="Tốt">Tốt</option>
+                <option value="Khá">Khá</option>
+                <option value="Trung Bình">Trung Bình</option>
+            </select>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="isLeader" style="width: 20px; height: 20px;">
+            <label for="isLeader" style="margin: 0; cursor: pointer;">Học sinh thuộc Ban Tự Quản / Có đóng góp năng nổ</label>
+        </div>
+        <button onclick="addStudent()">Thêm & Tạo Nhận Xét</button>
+    </div>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Họ Tên</th>
+                <th>Lớp</th>
+                <th>Điểm TB</th>
+                <th>Hạnh Kiểm</th>
+                <th>Nhận Xét Cuối Năm (Tự động)</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Dữ liệu học sinh sẽ hiển thị ở đây -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let studentList = [];
+
+    // Hàm logic cốt lõi thể hiện tâm huyết của giáo viên
+    function generateComment(score, conduct, isLeader) {
+        let comment = "";
+        
+        // Đánh giá năng lực học tập
+        if (score >= 8.0) {
+            comment += "Em có năng lực học tập xuất sắc, tư duy nhạy bén và luôn chủ động tìm tòi kiến thức mới. ";
+        } else if (score >= 6.5) {
+            comment += "Em có nhiều cố gắng trong học tập, hoàn thành tốt các nhiệm vụ thầy/cô giao. Nếu tập trung hơn, em sẽ còn tiến xa. ";
+        } else {
+            comment += "Em cần nỗ lực hơn nữa và xây dựng phương pháp tự học khoa học để cải thiện kết quả ở năm học tới. Thầy/cô tin em làm được. ";
+        }
+
+        // Đánh giá hạnh kiểm và đạo đức
+        if (conduct === "Tốt") {
+            comment += "Về đạo đức, em rất ngoan ngoãn, lễ phép, chan hòa với bạn bè và được mọi người quý mến. ";
+        } else if (conduct === "Khá") {
+            comment += "Chấp hành tốt nội quy nhà trường, tuy nhiên đôi lúc còn cần thầy/cô nhắc nhở nhẹ. ";
+        } else {
+            comment += "Cần nghiêm khắc rèn luyện thêm về ý thức kỷ luật và tác phong. ";
+        }
+
+        // Ghi nhận kỹ năng mềm và tinh thần trách nhiệm
+        if (isLeader) {
+             comment += "Đặc biệt, thầy/cô rất đánh giá cao tinh thần trách nhiệm và năng lực lãnh đạo của em khi tham gia vào ban tự quản. Em là nhân tố quan trọng giúp xây dựng tập thể lớp đoàn kết và vững mạnh.";
+        }
+
+        return comment;
+    }
+
+    function addStudent() {
+        let name = document.getElementById("studentName").value;
+        let className = document.getElementById("className").value;
+        let score = parseFloat(document.getElementById("score").value);
+        let conduct = document.getElementById("conduct").value;
+        let isLeader = document.getElementById("isLeader").checked;
+
+        if (!name || isNaN(score)) {
+            alert("Vui lòng nhập đầy đủ Tên và Điểm TB!");
+            return;
+        }
+
+        let autoComment = generateComment(score, conduct, isLeader);
+
+        let student = {
+            name: name,
+            className: className,
+            score: score,
+            conduct: conduct,
+            comment: autoComment
+        };
+
+        studentList.push(student);
+        renderTable();
+        
+        // Reset form
+        document.getElementById("studentName").value = "";
+        document.getElementById("score").value = "";
+        document.getElementById("isLeader").checked = false;
+        document.getElementById("studentName").focus();
+    }
+
+    function renderTable() {
+        let tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        studentList.forEach((std, index) => {
+            let row = `<tr>
+                <td>${index + 1}</td>
+                <td><strong>${std.name}</strong></td>
+                <td>${std.className}</td>
+                <td>${std.score}</td>
+                <td>${std.conduct}</td>
+                <td class="comment-cell">${std.comment}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+</script>
+
+</body>
+</html>
