@@ -3,54 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ Lý GVCN 2.0 - Batch Process</title>
+    <title>Trợ Lý GVCN 4.0 - Batch Process</title>
     <style>
-        :root { --primary: #1e3a8a; --success: #10b981; --bg: #e0f2f1; }
-/* --- Code thêm mới để xử lý Logo --- */
-.header-logo {
-    display: flex;          /* Nằm ngang */
-    align-items: center;     /* Căn giữa theo chiều cao */
-    justify-content: center; /* Căn giữa theo chiều rộng */
-    gap: 15px;              /* Khoảng cách giữa ảnh và chữ */
-    margin-bottom: 30px;     /* Khoảng cách phía dưới */
-}
-
-.header-logo h1 {
-    margin: 0;               /* Xóa bỏ khoảng cách mặc định của chữ */
-}
-
-.app-logo {
-    height: 60px;            /* Chiều cao của logo (bạn có thể tăng giảm tùy ý) */
-    width: auto;             /* Tự động chỉnh chiều rộng theo tỷ lệ ảnh */
-}
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
-        h1 { color: var(--primary); text-align: center; margin-bottom: 30px; }
-        .batch-area { background: #eff6ff; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px dashed #3b82f6; }
-        textarea { width: 100%; height: 150px; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; margin-top: 10px; }
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        button { flex: 1; background: var(--success); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: translateY(-2px); }
-        .secondary-btn { background: var(--primary); }
-        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
-        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
-        th { background: var(--primary); color: white; }
-        .score-badge { padding: 4px 8px; border-radius: 5px; font-weight: bold; color: white; }
-        .high { background: #10b981; } .med { background: #f59e0b; } .low { background: #ef4444; }
-        .instruction { font-size: 0.9rem; color: #64748b; margin-top: 5px; }
-        h1 { color: var(--primary); text-align: center; margin-bottom: 30px; }
-        .batch-area { background: #eff6ff; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px dashed #3b82f6; }
-        textarea { width: 100%; height: 150px; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; margin-top: 10px; }
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        button { flex: 1; background: var(--success); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: translateY(-2px); }
-        .secondary-btn { background: var(--primary); }
-        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
-        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
-        th { background: var(--primary); color: white; }
-        .score-badge { padding: 4px 8px; border-radius: 5px; font-weight: bold; color: white; }
-        .high { background: #10b981; } .med { background: #f59e0b; } .low { background: #ef4444; }
-        .instruction { font-size: 0.9rem; color: #64748b; margin-top: 5px; }
+       :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #27ae60;
+            --bg-color: #e0f2f1; /* Nền xanh ngọc bích nhạt */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px; /* Thêm khoảng cách trên dưới */
+            color: #333;
+            display: flex; /* Dùng flexbox để căn giữa khung */
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px; /* Giữ khung rộng tối đa 1000px như bản đầu */
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Tăng bóng đổ cho khung nổi hơn */
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+        }
+        .header-logo h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 28px;
+        }
+        .app-logo {
+            height: 60px;
+            width: auto;
+        }
+        .batch-area {
+            background: #e8f4f8; /* Màu nền cho khu vực nhập như bản đầu */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .batch-area label {
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            box-sizing: border-box; /* Đảm bảo textarea không bị tràn viền */
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        button {
+            flex: 1;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        .secondary-btn {
+            background-color: var(--primary-color);
+        }
+        .secondary-btn:hover {
+            background-color: #1a252f;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .comment-cell {
+            font-style: italic;
+            color: #555;
+            line-height: 1.5;
+        }
+        .score-badge {
+            font-weight: bold;
+        }
+        .instruction {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
