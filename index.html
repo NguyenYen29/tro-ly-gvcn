@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ Lý GVCN 4.0 - Batch Process</title>
+    <title>Trợ Lý GVCN 2.0</title>
     <style>
-       :root {
+        :root {
             --primary-color: #2c3e50;
             --secondary-color: #27ae60;
             --bg-color: #e0f2f1; /* Nền xanh ngọc bích nhạt */
@@ -124,13 +124,16 @@
 </head>
 <body>
 
-<div class="header-logo">
-    <img src="logo-app.png" alt="Logo Trợ Lý GVCN" class="app-logo">
-    <h1>TRỢ LÝ NHẬN XÉT CUỐI NĂM 4.0</h1>
-</div>
-        <strong>Thầy cô dán danh sách từ Excel vào đây:</strong>
-        <p class="instruction">Cách làm: Bôi đen cột "Họ Tên" và "Điểm TB" trong Excel -> Copy -> Paste vào ô dưới.</p>
-        <textarea id="excelInput" placeholder="Ví dụ:&#10;Nguyễn Văn A	8.5&#10;Lê Thị B	7.2"></textarea>
+<div class="container">
+    <div class="header-logo">
+        <img src="logo-app.png" alt="Logo Roboki" class="app-logo">
+        <h1>Phần Mềm Hỗ Trợ Giáo Viên Chủ Nhiệm 4.0</h1>
+    </div>
+    
+    <div class="batch-area">
+        <label>Thầy cô dán danh sách từ Excel vào đây:</label>
+        <div class="instruction">Cách làm: Bôi đen cột "Họ Tên" và "Điểm TB" trong Excel -> Copy -> Paste vào ô dưới.</div>
+        <textarea id="excelInput" placeholder="Ví dụ:&#10;Nguyễn Văn A&#9;8.5&#10;Lê Thị B&#9;7.2"></textarea>
         <div class="btn-group">
             <button onclick="processData()">Xử Lý Toàn Bộ Danh Sách</button>
             <button class="secondary-btn" onclick="clearData()">Xóa Hết</button>
@@ -141,44 +144,38 @@
         <thead>
             <tr>
                 <th width="5%">STT</th>
-                <th width="20%">Họ và Tên</th>
+                <th width="20%">Họ Tên</th>
                 <th width="10%">Điểm TB</th>
-                <th width="65%">Nhận Xét Tự Động (Thông tư 22)</th>
+                <th width="65%">Nhận Xét Cuối Năm (Tự động)</th>
             </tr>
         </thead>
-        <tbody id="tableBody"></tbody>
+        <tbody id="tableBody">
+            <!-- Dữ liệu sẽ hiển thị ở đây -->
+        </tbody>
     </table>
 </div>
 
 <script>
+    // Giữ nguyên đoạn script xử lý logic
     function generateComment(score) {
-        // Kho từ điển nhận xét đa dạng
         const comments = {
             excellent: [
-                "Em có trách nhiệm và luôn sẵn sàng giúp đỡ bạn học trong quá trình học tập, bằng cách chia sẻ kiến thức và kinh nghiệm học tập của mình.. Luôn chủ động trong học tập và hoàn thành xuất sắc mọi nhiệm vụ.",
+                "Học sinh có tố chất thông minh, tư duy logic tốt. Luôn chủ động trong học tập và hoàn thành xuất sắc mọi nhiệm vụ.",
                 "Năng lực học tập vượt trội, thái độ cầu tiến. Là tấm gương sáng cho bạn bè noi theo.",
-                "Kiến thức vững vàng, kỹ năng giải quyết vấn đề nhanh nhạy. Phát huy tốt khả năng tự học.",
-		"Ý thức học tập của em rất tốt, em luôn nỗ lực hết mình để đạt được kết quả tốt nhất có thể.",
-		"Em là một học sinh tích cực, năng động, và có khả năng làm việc nhóm tốt. Em luôn có ý thức tự học và chủ động rèn luyện kỹ năng để trở thành một học sinh giỏi hơn."
+                "Kiến thức vững vàng, kỹ năng giải quyết vấn đề nhanh nhạy. Phát huy tốt khả năng tự học."
             ],
             good: [
                 "Tiếp thu bài nhanh, có ý thức học tập tốt. Cần phát huy hơn nữa sự mạnh dạn khi phát biểu.",
                 "Học tập chuyên cần, kết quả ổn định. Khả năng làm việc nhóm và giao tiếp tốt.",
-                "Nắm vững kiến thức trọng tâm, thái độ học tập tích cực, văn hóa ứng xử chuẩn mực.",
-		"Tập trung nỗ lực và cố gắng hết sức trong quá trình học tập, không ngừng nâng cao trình độ của bản thân."
+                "Nắm vững kiến thức trọng tâm, thái độ học tập tích cực, văn hóa ứng xử chuẩn mực."
             ],
             average: [
                 "Có cố gắng trong học tập nhưng kết quả chưa đều. Cần tập trung hơn ở các môn tự nhiên.",
                 "Tiếp thu kiến thức cơ bản tốt, tuy nhiên cần rèn luyện thêm tính tự giác và kiên trì.",
-                "Cần xây dựng phương pháp học tập khoa học hơn để cải thiện kết quả ở học kỳ tới.",
-		"Em làm việc chăm chỉ, ngoan, luôn tập trung, chú ý lắng nghe giảng và không ngại khó khăn trong quá trình học tập. Em cũng thường xuyên đặt câu hỏi và tìm kiếm giải pháp để giải quyết các vấn đề phát sinh trong quá trình làm việc.",
-		"Em có khả năng tư duy và suy luận tốt, kiến thức vững chắc. Em có khả năng phân tích và đưa ra các quyết định đúng đắn trong khi làm việc, đảm bảo tiến độ công việc được thực hiện đúng hạn và chất lượng được đảm bảo.",
-		"Em năng động, có khả năng làm việc nhóm tốt. Em luôn sẵn sàng hỗ trợ và tương tác với các thành viên trong nhóm, đóng góp ý kiến và giải pháp để đưa ra kết quả tốt nhất trong công việc nhóm."
+                "Cần xây dựng phương pháp học tập khoa học hơn để cải thiện kết quả ở học kỳ tới."
             ],
             below: [
                 "Kết quả học tập còn hạn chế, cần sự hỗ trợ sát sao từ gia đình và giáo viên.",
-		"Có trách nhiệm trong học tập, nhưng cần cải thiện nhiều kỹ năng hơn để tiến bộ đáng kể.",
-		"Em đạt kết quả khá, cần nỗ lực tìm hiểu và học hỏi các phương pháp học tập mới.",
                 "Chưa tập trung trong giờ học, kiến thức hổng nhiều. Cần nỗ lực gấp đôi trong năm học tới.",
                 "Khả năng tiếp thu còn chậm, cần rèn luyện thêm kỹ năng đọc hiểu và làm bài tập cơ bản."
             ]
@@ -201,7 +198,6 @@
         tbody.innerHTML = "";
 
         lines.forEach((line, index) => {
-            // Xử lý dữ liệu ngăn cách bởi Tab (Excel mặc định) hoặc dấu phẩy
             const parts = line.split(/\t|,/);
             if (parts.length >= 2) {
                 const name = parts[0].trim();
@@ -209,13 +205,12 @@
                 
                 if (!isNaN(score)) {
                     const comment = generateComment(score);
-                    const badgeClass = score >= 8 ? 'high' : (score >= 6.5 ? 'med' : 'low');
                     
                     const row = `<tr>
                         <td>${index + 1}</td>
                         <td><strong>${name}</strong></td>
-                        <td><span class="score-badge ${badgeClass}">${score}</span></td>
-                        <td>${comment}</td>
+                        <td><span class="score-badge">${score}</span></td>
+                        <td class="comment-cell">${comment}</td>
                     </tr>`;
                     tbody.innerHTML += row;
                 }
