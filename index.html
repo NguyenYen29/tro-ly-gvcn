@@ -3,268 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ Lý Giáo Viên Chủ Nhiệm 4.0</title>
+    <title>Trợ Lý GVCN 2.0 - Batch Process</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #27ae60;
-            --bg-color: #f4f7f6;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
-        }
-        .form-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: #e8f4f8;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .input-box {
-            flex: 1;
-            min-width: 200px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-        }
-        button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-            margin-top: 10px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #219150;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .comment-cell {
-            font-style: italic;
-            color: #555;
-            max-width: 400px;
-            line-height: 1.5;
-        }
+        :root { --primary: #1e3a8a; --success: #10b981; --bg: #e0f2f1; }
+/* --- Code thêm mới để xử lý Logo --- */
+.header-logo {
+    display: flex;          /* Nằm ngang */
+    align-items: center;     /* Căn giữa theo chiều cao */
+    justify-content: center; /* Căn giữa theo chiều rộng */
+    gap: 15px;              /* Khoảng cách giữa ảnh và chữ */
+    margin-bottom: 30px;     /* Khoảng cách phía dưới */
+}
+
+.header-logo h1 {
+    margin: 0;               /* Xóa bỏ khoảng cách mặc định của chữ */
+}
+
+.app-logo {
+    height: 60px;            /* Chiều cao của logo (bạn có thể tăng giảm tùy ý) */
+    width: auto;             /* Tự động chỉnh chiều rộng theo tỷ lệ ảnh */
+}
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+        h1 { color: var(--primary); text-align: center; margin-bottom: 30px; }
+        .batch-area { background: #eff6ff; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px dashed #3b82f6; }
+        textarea { width: 100%; height: 150px; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; margin-top: 10px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        button { flex: 1; background: var(--success); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        .secondary-btn { background: var(--primary); }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        th { background: var(--primary); color: white; }
+        .score-badge { padding: 4px 8px; border-radius: 5px; font-weight: bold; color: white; }
+        .high { background: #10b981; } .med { background: #f59e0b; } .low { background: #ef4444; }
+        .instruction { font-size: 0.9rem; color: #64748b; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Phần Mềm Hỗ Trợ Giáo Viên Chủ Nhiệm</h1>
-    
-    <div class="form-group">
-        <div class="input-box">
-            <label for="studentName">Họ và Tên Học Sinh:</label>
-            <input type="text" id="studentName" placeholder="VD: Nguyễn Văn A">
+<div class="header-logo">
+    <img src="logo-app.png" alt="Logo Trợ Lý GVCN" class="app-logo">
+    <h1>TRỢ LÝ NHẬN XÉT CUỐI NĂM 4.0</h1>
+</div>
+        <strong>Thầy cô dán danh sách từ Excel vào đây:</strong>
+        <p class="instruction">Cách làm: Bôi đen cột "Họ Tên" và "Điểm TB" trong Excel -> Copy -> Paste vào ô dưới.</p>
+        <textarea id="excelInput" placeholder="Ví dụ:&#10;Nguyễn Văn A	8.5&#10;Lê Thị B	7.2"></textarea>
+        <div class="btn-group">
+            <button onclick="processData()">Xử Lý Toàn Bộ Danh Sách</button>
+            <button class="secondary-btn" onclick="clearData()">Xóa Hết</button>
         </div>
-        <div class="input-box">
-            <label for="className">Lớp:</label>
-            <select id="className">
-                <option value="10A1">10A1</option>
-                <option value="10A2">10A2</option>
-                <option value="10A3">10A3</option>
-                <option value="10A4">10A4</option>
-                <option value="10A5">10A5</option>
-                <option value="10A6">10A6</option>
-                <option value="10A7">10A7</option>
-                <option value="10A8">10A8</option>
-                <option value="10A9">10A9</option>
-                <option value="11A1">11A1</option>
-                <option value="11A2">11A2</option>
-                <option value="11A3">11A3</option>
-                <option value="11A3">11A3</option>
-                <option value="11A4">11A4</option>
-                <option value="11A5">11A5</option>
-                <option value="11A6">11A6</option>
-                <option value="11A7">11A7</option>
-                <option value="11A8">11A8</option>
-                <option value="11A9">11A9</option>
-                <option value="11A10">11A10</option>
-                <option value="12A1">12A1</option>
-                <option value="12A2">12A2</option>
-                <option value="12A3">12A3</option>
-                <option value="12A4">12A4</option>
-                <option value="12A5">12A5</option>
-                <option value="12A6">12A6</option>
-                <option value="12A7">12A7</option>
-                <option value="12A8">12A8</option>
-                <option value="12A9">12A9</option>
-                <option value="12A10">12A10</option>
-                
-            </select>
-        </div>
-        <div class="input-box">
-            <label for="score">Điểm TB Học Kỳ/Cả Năm:</label>
-            <input type="number" id="score" step="0.1" min="0" max="10" placeholder="VD: 8.5">
-        </div>
-        <div class="input-box">
-            <label for="conduct">Hạnh Kiểm:</label>
-            <select id="conduct">
-                <option value="Tốt">Tốt</option>
-                <option value="Khá">Khá</option>
-                <option value="Trung Bình">Trung Bình</option>
-            </select>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="isLeader" style="width: 20px; height: 20px;">
-            <label for="isLeader" style="margin: 0; cursor: pointer;">Học sinh thuộc Ban Tự Quản / Có đóng góp năng nổ</label>
-        </div>
-        <button onclick="addStudent()">Thêm & Tạo Nhận Xét</button>
     </div>
 
-    <table id="studentTable">
+    <table id="resultTable">
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Họ Tên</th>
-                <th>Lớp</th>
-                <th>Điểm TB</th>
-                <th>Hạnh Kiểm</th>
-                <th>Nhận Xét Cuối Năm (Tự động)</th>
+                <th width="5%">STT</th>
+                <th width="20%">Họ và Tên</th>
+                <th width="10%">Điểm TB</th>
+                <th width="65%">Nhận Xét Tự Động (Thông tư 22)</th>
             </tr>
         </thead>
-        <tbody id="tableBody">
-            <!-- Dữ liệu học sinh sẽ hiển thị ở đây -->
-        </tbody>
+        <tbody id="tableBody"></tbody>
     </table>
 </div>
 
 <script>
-    let studentList = [];
-
-    // Hàm logic cốt lõi thể hiện tâm huyết của giáo viên
-    function generateComment(score, conduct, isLeader) {
-        let comment = "";
-        
-        // Đánh giá năng lực học tập
-        if (score >= 8.0) {
-            comment += "Em có năng lực học tập xuất sắc, tư duy nhạy bén và luôn chủ động tìm tòi kiến thức mới. ";
-        } else if (score >= 6.5) {
-            comment += "Em có nhiều cố gắng trong học tập, hoàn thành tốt các nhiệm vụ thầy/cô giao. Nếu tập trung hơn, em sẽ còn tiến xa. ";
-        } else {
-            comment += "Em cần nỗ lực hơn nữa và xây dựng phương pháp tự học khoa học để cải thiện kết quả ở năm học tới. Thầy/cô tin em làm được. ";
-        }
-
-        // Đánh giá hạnh kiểm và đạo đức
-        if (conduct === "Tốt") {
-            comment += "Về đạo đức, em rất ngoan ngoãn, lễ phép, chan hòa với bạn bè và được mọi người quý mến. ";
-        } else if (conduct === "Khá") {
-            comment += "Chấp hành tốt nội quy nhà trường, tuy nhiên đôi lúc còn cần thầy/cô nhắc nhở nhẹ. ";
-        } else {
-            comment += "Cần nghiêm khắc rèn luyện thêm về ý thức kỷ luật và tác phong. ";
-        }
-
-        // Ghi nhận kỹ năng mềm và tinh thần trách nhiệm
-        if (isLeader) {
-             comment += "Đặc biệt, thầy/cô rất đánh giá cao tinh thần trách nhiệm và năng lực lãnh đạo của em khi tham gia vào ban tự quản. Em là nhân tố quan trọng giúp xây dựng tập thể lớp đoàn kết và vững mạnh.";
-        }
-
-        return comment;
-    }
-
-    function addStudent() {
-        let name = document.getElementById("studentName").value;
-        let className = document.getElementById("className").value;
-        let score = parseFloat(document.getElementById("score").value);
-        let conduct = document.getElementById("conduct").value;
-        let isLeader = document.getElementById("isLeader").checked;
-
-        if (!name || isNaN(score)) {
-            alert("Vui lòng nhập đầy đủ Tên và Điểm TB!");
-            return;
-        }
-
-        let autoComment = generateComment(score, conduct, isLeader);
-
-        let student = {
-            name: name,
-            className: className,
-            score: score,
-            conduct: conduct,
-            comment: autoComment
+    function generateComment(score) {
+        // Kho từ điển nhận xét đa dạng
+        const comments = {
+            excellent: [
+                "Em có trách nhiệm và luôn sẵn sàng giúp đỡ bạn học trong quá trình học tập, bằng cách chia sẻ kiến thức và kinh nghiệm học tập của mình.. Luôn chủ động trong học tập và hoàn thành xuất sắc mọi nhiệm vụ.",
+                "Năng lực học tập vượt trội, thái độ cầu tiến. Là tấm gương sáng cho bạn bè noi theo.",
+                "Kiến thức vững vàng, kỹ năng giải quyết vấn đề nhanh nhạy. Phát huy tốt khả năng tự học.",
+		"Ý thức học tập của em rất tốt, em luôn nỗ lực hết mình để đạt được kết quả tốt nhất có thể.",
+		"Em là một học sinh tích cực, năng động, và có khả năng làm việc nhóm tốt. Em luôn có ý thức tự học và chủ động rèn luyện kỹ năng để trở thành một học sinh giỏi hơn."
+            ],
+            good: [
+                "Tiếp thu bài nhanh, có ý thức học tập tốt. Cần phát huy hơn nữa sự mạnh dạn khi phát biểu.",
+                "Học tập chuyên cần, kết quả ổn định. Khả năng làm việc nhóm và giao tiếp tốt.",
+                "Nắm vững kiến thức trọng tâm, thái độ học tập tích cực, văn hóa ứng xử chuẩn mực.",
+		"Tập trung nỗ lực và cố gắng hết sức trong quá trình học tập, không ngừng nâng cao trình độ của bản thân."
+            ],
+            average: [
+                "Có cố gắng trong học tập nhưng kết quả chưa đều. Cần tập trung hơn ở các môn tự nhiên.",
+                "Tiếp thu kiến thức cơ bản tốt, tuy nhiên cần rèn luyện thêm tính tự giác và kiên trì.",
+                "Cần xây dựng phương pháp học tập khoa học hơn để cải thiện kết quả ở học kỳ tới.",
+		"Em làm việc chăm chỉ, ngoan, luôn tập trung, chú ý lắng nghe giảng và không ngại khó khăn trong quá trình học tập. Em cũng thường xuyên đặt câu hỏi và tìm kiếm giải pháp để giải quyết các vấn đề phát sinh trong quá trình làm việc.",
+		"Em có khả năng tư duy và suy luận tốt, kiến thức vững chắc. Em có khả năng phân tích và đưa ra các quyết định đúng đắn trong khi làm việc, đảm bảo tiến độ công việc được thực hiện đúng hạn và chất lượng được đảm bảo.",
+		"Em năng động, có khả năng làm việc nhóm tốt. Em luôn sẵn sàng hỗ trợ và tương tác với các thành viên trong nhóm, đóng góp ý kiến và giải pháp để đưa ra kết quả tốt nhất trong công việc nhóm."
+            ],
+            below: [
+                "Kết quả học tập còn hạn chế, cần sự hỗ trợ sát sao từ gia đình và giáo viên.",
+		"Có trách nhiệm trong học tập, nhưng cần cải thiện nhiều kỹ năng hơn để tiến bộ đáng kể.",
+		"Em đạt kết quả khá, cần nỗ lực tìm hiểu và học hỏi các phương pháp học tập mới.",
+                "Chưa tập trung trong giờ học, kiến thức hổng nhiều. Cần nỗ lực gấp đôi trong năm học tới.",
+                "Khả năng tiếp thu còn chậm, cần rèn luyện thêm kỹ năng đọc hiểu và làm bài tập cơ bản."
+            ]
         };
 
-        studentList.push(student);
-        renderTable();
-        
-        // Reset form
-        document.getElementById("studentName").value = "";
-        document.getElementById("score").value = "";
-        document.getElementById("isLeader").checked = false;
-        document.getElementById("studentName").focus();
+        const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+        if (score >= 8.0) return random(comments.excellent);
+        if (score >= 6.5) return random(comments.good);
+        if (score >= 5.0) return random(comments.average);
+        return random(comments.below);
     }
 
-    function renderTable() {
-        let tbody = document.getElementById("tableBody");
+    function processData() {
+        const input = document.getElementById("excelInput").value.trim();
+        if (!input) { alert("Vui lòng dán dữ liệu!"); return; }
+
+        const lines = input.split('\n');
+        const tbody = document.getElementById("tableBody");
         tbody.innerHTML = "";
 
-        studentList.forEach((std, index) => {
-            let row = `<tr>
-                <td>${index + 1}</td>
-                <td><strong>${std.name}</strong></td>
-                <td>${std.className}</td>
-                <td>${std.score}</td>
-                <td>${std.conduct}</td>
-                <td class="comment-cell">${std.comment}</td>
-            </tr>`;
-            tbody.innerHTML += row;
+        lines.forEach((line, index) => {
+            // Xử lý dữ liệu ngăn cách bởi Tab (Excel mặc định) hoặc dấu phẩy
+            const parts = line.split(/\t|,/);
+            if (parts.length >= 2) {
+                const name = parts[0].trim();
+                const score = parseFloat(parts[1].trim().replace(',', '.'));
+                
+                if (!isNaN(score)) {
+                    const comment = generateComment(score);
+                    const badgeClass = score >= 8 ? 'high' : (score >= 6.5 ? 'med' : 'low');
+                    
+                    const row = `<tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${name}</strong></td>
+                        <td><span class="score-badge ${badgeClass}">${score}</span></td>
+                        <td>${comment}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                }
+            }
         });
     }
-</script>
 
+    function clearData() {
+        document.getElementById("excelInput").value = "";
+        document.getElementById("tableBody").innerHTML = "";
+    }
+</script>
 </body>
 </html>
