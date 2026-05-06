@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ Lý GVCN 2.0</title>
+    <title>Trợ Lý GVCN 4.0</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -160,22 +160,29 @@
     function generateComment(score) {
         const comments = {
             excellent: [
-                "Học sinh có tố chất thông minh, tư duy logic tốt. Luôn chủ động trong học tập và hoàn thành xuất sắc mọi nhiệm vụ.",
+                "Em có trách nhiệm và luôn sẵn sàng giúp đỡ bạn học trong quá trình học tập, bằng cách chia sẻ kiến thức và kinh nghiệm học tập của mình.. Luôn chủ động trong học tập và hoàn thành xuất sắc mọi nhiệm vụ.",
                 "Năng lực học tập vượt trội, thái độ cầu tiến. Là tấm gương sáng cho bạn bè noi theo.",
-                "Kiến thức vững vàng, kỹ năng giải quyết vấn đề nhanh nhạy. Phát huy tốt khả năng tự học."
+                "Kiến thức vững vàng, kỹ năng giải quyết vấn đề nhanh nhạy. Phát huy tốt khả năng tự học.",
+		        "Ý thức học tập của em rất tốt, em luôn nỗ lực hết mình để đạt được kết quả tốt nhất có thể.",
+		        "Em là một học sinh tích cực, năng động, và có khả năng làm việc nhóm tốt. Em luôn có ý thức tự học và chủ động rèn luyện kỹ năng để trở thành một học sinh giỏi hơn."
             ],
             good: [
                 "Tiếp thu bài nhanh, có ý thức học tập tốt. Cần phát huy hơn nữa sự mạnh dạn khi phát biểu.",
                 "Học tập chuyên cần, kết quả ổn định. Khả năng làm việc nhóm và giao tiếp tốt.",
-                "Nắm vững kiến thức trọng tâm, thái độ học tập tích cực, văn hóa ứng xử chuẩn mực."
+                "Nắm vững kiến thức trọng tâm, thái độ học tập tích cực, văn hóa ứng xử chuẩn mực.",
+                "Tập trung nỗ lực và cố gắng hết sức trong quá trình học tập, không ngừng nâng cao trình độ của bản thân."
             ],
             average: [
                 "Có cố gắng trong học tập nhưng kết quả chưa đều. Cần tập trung hơn ở các môn tự nhiên.",
                 "Tiếp thu kiến thức cơ bản tốt, tuy nhiên cần rèn luyện thêm tính tự giác và kiên trì.",
-                "Cần xây dựng phương pháp học tập khoa học hơn để cải thiện kết quả ở học kỳ tới."
+               	"Em làm việc chăm chỉ, ngoan, luôn tập trung, chú ý lắng nghe giảng và không ngại khó khăn trong quá trình học tập. Em cũng thường xuyên đặt câu hỏi và tìm kiếm giải pháp để giải quyết các vấn đề phát sinh trong quá trình làm việc.",
+		        "Em có khả năng tư duy và suy luận tốt, kiến thức vững chắc. Em có khả năng phân tích và đưa ra các quyết định đúng đắn trong khi làm việc, đảm bảo tiến độ công việc được thực hiện đúng hạn và chất lượng được đảm bảo.",
+		        "Em năng động, có khả năng làm việc nhóm tốt. Em luôn sẵn sàng hỗ trợ và tương tác với các thành viên trong nhóm, đóng góp ý kiến và giải pháp để đưa ra kết quả tốt nhất trong công việc nhóm."
+
             ],
             below: [
                 "Kết quả học tập còn hạn chế, cần sự hỗ trợ sát sao từ gia đình và giáo viên.",
+                "Có trách nhiệm trong học tập, nhưng cần cải thiện nhiều kỹ năng hơn để tiến bộ đáng kể.",
                 "Chưa tập trung trong giờ học, kiến thức hổng nhiều. Cần nỗ lực gấp đôi trong năm học tới.",
                 "Khả năng tiếp thu còn chậm, cần rèn luyện thêm kỹ năng đọc hiểu và làm bài tập cơ bản."
             ]
